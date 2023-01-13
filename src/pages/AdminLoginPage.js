@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import { adminLogin } from '../web2Communication';
   
 const AdminLoginPage = () => {
 
@@ -7,15 +8,23 @@ const AdminLoginPage = () => {
     const [password, setPassword] = useState("");
 
     // imamo log in btn, ali njemu nije dodeljen onClick
-    //<form> by default bi trebalo da ima dugme sa submitovanje forme
-    //i zato forma ima svoj onSubmit
-    //react skonta da formin onsubmit treba da okine na klik login dugmeta iako nisu spojeni
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log({ username, password });
-      setPassword("");
-      setUsername("");
-  };
+  	//<form> by default bi trebalo da ima dugme sa submitovanje forme
+ 	//i zato forma ima svoj onSubmit
+  	//react skonta da formin onsubmit treba da okine na klik login dugmeta iako nisu spojeni
+	const handleSubmit = async (e) =>{
+		e.preventDefault();
+		console.log({ username, password });
+
+		//web2 http request
+		let token = await adminLogin(username, password);
+		localStorage.setItem("Token",token);
+		
+		console.log("Token from JSON:");
+		console.log(token);
+
+		// setPassword("");
+		// setUsername("");
+	} 
 
   return (
     <div className='login__container'>

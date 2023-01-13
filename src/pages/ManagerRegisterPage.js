@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { registerManager } from "../web2Communication";
 
 const ManagerRegisterPage = () => {
 
@@ -16,14 +17,18 @@ const ManagerRegisterPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ email, username, tel, password,firstName,lastName,companyName,birthDate });
-    setEmail("");
-    setTel("");
-    setUsername("");
-    setPassword("");
-    setBirthDate("");
-    setFirstName("");
-    setLastName("");
-    setCompanyName("");
+
+    //web2 http request
+    registerManager(email, username, tel, password,firstName,lastName,companyName,birthDate);
+    
+    // setEmail("");
+    // setTel("");
+    // setUsername("");
+    // setPassword("");
+    // setBirthDate("");
+    // setFirstName("");
+    // setLastName("");
+    // setCompanyName("");
   };
   
   const gotoManagerLoginPage = () => navigate("/managerLoginPage");

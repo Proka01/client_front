@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { registerClient } from "../web2Communication";
 
 const ClientRegisterPage = () => {
 
@@ -16,16 +17,20 @@ const ClientRegisterPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ email, username, tel, password,firstName,lastName,passeportNum,birthDate });
-    setEmail("");
-    setTel("");
-    setUsername("");
-    setPassword("");
-    setBirthDate("");
-    setFirstName("");
-    setLastName("");
-    setPasseportNum("");
+    
+    //web2 http request
+    registerClient(firstName, lastName, email, username, password, tel, passeportNum, birthDate);
+
+    // setEmail("");
+    // setTel("");
+    // setUsername("");
+    // setPassword("");
+    // setBirthDate("");
+    // setFirstName("");
+    // setLastName("");
+    // setPasseportNum("");
   };
-  
+
   const gotoClientLoginPage = () => navigate("/clientLoginPage");
 
   return (

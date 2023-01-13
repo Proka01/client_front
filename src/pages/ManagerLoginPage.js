@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { managerLoing } from "../web2Communication";
 
 const ManagerLoginPage = () => {
 
   const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log({ username, password });
-      setPassword("");
-      setUsername("");
-  };
+  // imamo log in btn, ali njemu nije dodeljen onClick
+  //<form> by default bi trebalo da ima dugme sa submitovanje forme
+  //i zato forma ima svoj onSubmit
+  //react skonta da formin onsubmit treba da okine na klik login dugmeta iako nisu spojeni
+  const handleSubmit = async (e) =>{
+        e.preventDefault();
+        console.log({ username, password });
+
+        //web2 http request
+        let token = await managerLoing(username, password);
+        localStorage.setItem("Token",token);
+        
+        console.log("Token from JSON:");
+        console.log(token);
+
+        // setPassword("");
+        // setUsername("");
+    } 
 
   const gotoManagerRegisterPage = () => navigate("/managerRegisterPage");
 
@@ -39,7 +52,7 @@ const ManagerLoginPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button className='loginBtn aleksaBtn'>Register</button>
+                <button className='loginBtn aleksaBtn'>Login</button>
                 <p>
                     Don't have an account?{" "}
                     <span className='link' onClick={gotoManagerRegisterPage}>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { clientLogin } from '../web2Communication';
 
 const ClientLoginPage = () => {
 
@@ -14,12 +15,20 @@ const ClientLoginPage = () => {
   //<form> by default bi trebalo da ima dugme sa submitovanje forme
   //i zato forma ima svoj onSubmit
   //react skonta da formin onsubmit treba da okine na klik login dugmeta iako nisu spojeni
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) =>{
+	e.preventDefault();
     console.log({ username, password });
-    setPassword("");
-    setUsername("");
-};
+
+	//web2 http request
+	let token = await clientLogin(username, password);
+	localStorage.setItem("Token",token);
+	
+	console.log("Token from JSON:");
+	console.log(token);
+
+    // setPassword("");
+    // setUsername("");
+ } 
 
   return (
     <div className='login__container'>
