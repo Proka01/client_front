@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Vehicles from '../components/Vehicles';
-import { searchAvailableVehicles, getAllCompanies, getAllCities } from '../web2Communication';
+import { searchAvailableVehicles, getAllCompanies, getAllCities, getReservations, cancelReservation } from '../web2Communication';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from '@fortawesome/fontawesome-free-solid';
 import fontawesome from '@fortawesome/fontawesome'
@@ -13,6 +13,8 @@ const ClientHomePage = () => {
     const[endDate, setEndDate] = useState();
     const[availableVehicles, setAvailableVehicles] = useState([]);
     const[sortDesc, setSort] = useState(false);
+    const[myReservations, setMyReservation] = useState([]);
+    const[render, setRender] = useState(false);
 
 
     function daysDiff(){
@@ -55,9 +57,21 @@ const ClientHomePage = () => {
         }
     }
 
+    async function loadReservations(){
+        setMyReservation([])
+        let reservations = await getReservations();
+        setMyReservation(reservations)
+    }
+
     useEffect(()=>{
         loadData();
+        loadReservations();
     },[])
+
+    useEffect(()=>{
+        loadReservations();
+        searchFunc();
+    },[render])
 
     useEffect(()=>{
         if(sortDesc) availableVehicles.sort((a,b)=>{if(a.pricePerDay<b.pricePerDay)return 1; return -1;})
@@ -75,6 +89,11 @@ const ClientHomePage = () => {
         }
         console.log(x);
         setAvailableVehicles(x);
+    }
+
+    async function cancel(id){
+        await cancelReservation(id); 
+        setRender(!render)
     }
 
   return (
@@ -107,8 +126,45 @@ const ClientHomePage = () => {
         {!sortDesc? <button className='sortBtn' onClick={e=>setSort(true)}>Sort DESC<span className="iconSortDesc"></span></button>:<button className='sortBtn' onClick={e=>setSort(false)}><span className="iconSortAsc"></span> Sort ASC</button>}
 
       </div>
+      <div style={{display:"flex", justifyContent:"space-around"}}>
+        <div style={{width:"60%"}}>
+            <Vehicles vehicles={availableVehicles} dayDiff={daysDiff()} render={render} setRender={setRender}></Vehicles>
+        </div>
+        <div style={{width:"20%"}}>
+            {
+            myReservations.map((item,ind) => {
+                return (
+                  <div id={ind} style={{border:"3px solid green", borderRadius:"8px", width:"100%", position:"relative"}}>
+                        <h2>Resevation #{item.id}</h2>
+                        <div style={{display:"flex", overflow:"hidden", marginLeft:"10px", marginBottom:"10px"}}>
+                            <p>Vehicle:</p>
+                            <h3 style={{fontSize:"16px", marginLeft:"10px"}}>{item.vehicle.brand} {item.vehicle.model}</h3>
+                        </div>
+                        <div style={{display:"flex", overflow:"hidden", marginLeft:"10px", marginBottom:"10px"}}>
+                            <p>From:</p>
+                            <h3 style={{fontSize:"16px", marginLeft:"10px"}}>{item.startDate}</h3>
+                        </div>
 
-      <Vehicles vehicles={availableVehicles} dayDiff={daysDiff()}></Vehicles>
+                        <div style={{display:"flex", overflow:"hidden", marginLeft:"10px", marginBottom:"10px"}}>
+                            <p>To:</p>
+                            <h3 style={{fontSize:"16px", marginLeft:"10px"}}>{item.endDate}</h3>
+                        </div>
+
+                        <div style={{display:"flex", overflow:"hidden", marginLeft:"10px", marginBottom:"10px"}}>
+                            <p>Total price:</p>
+                            <h3 style={{fontSize:"16px", marginLeft:"10px"}}>{item.totalPrice} eur</h3>
+                        </div>
+
+                        <div style={{position:"absolute", bottom:"10px", right:"2px"}}>
+                            <button className='cancelReservationBtn' onClick={e=>cancel(item.id)}>Cancel reservation</button>
+                        </div>
+
+                  </div>
+                );
+                })}
+        </div>
+      </div>
+      
 
         
     </div>

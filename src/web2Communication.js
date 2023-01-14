@@ -116,6 +116,49 @@ export async function registerClient(firstName, lastName, email, username, passw
     })
   }
 
+  export async function getReservations() {
+    const url = "http://localhost:8081/api/reservation";
+    var bearer = 'Bearer ' + localStorage.getItem("Token");
+
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
+
+  export async function cancelReservation(id) {
+    const url = "http://localhost:8081/api/reservation";
+    var bearer = 'Bearer ' + localStorage.getItem("Token");
+
+    return fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+      body: JSON.stringify({id})
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
+
 // MANAGER
   export async function registerManager(email, username, phoneNumber, password,firstName,lastName,companyName,birthDate) {
 

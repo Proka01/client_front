@@ -118,3 +118,15 @@ input {
 	font-size: 14px;
   }
   .sortBtn:hover {background-color: #3e8e41}
+
+  .cancelReservationBtn{
+	background-color: green;
+	color: white;
+	border: 2px solid green;
+	border-radius: 5px;
+	padding: 5px 10px;
+	cursor: pointer;
+	font-size: 12px;
+  }
+  .cancelReservationBtn:hover {background-color: #3e8e41;	border: 2px solid green;
+  }
