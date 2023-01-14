@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Vehicles from '../components/Vehicles';
 import { searchAvailableVehicles, getAllCompanies, getAllCities } from '../web2Communication';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faCartArrowDown } from '@fortawesome/fontawesome-free-solid';
+import fontawesome from '@fortawesome/fontawesome'
 
 const ClientHomePage = () => {
 
@@ -9,6 +12,7 @@ const ClientHomePage = () => {
     const[startDate, setStartDate] = useState();
     const[endDate, setEndDate] = useState();
     const[availableVehicles, setAvailableVehicles] = useState([]);
+    const[sortDesc, setSort] = useState(false);
 
 
     function daysDiff(){
@@ -55,6 +59,11 @@ const ClientHomePage = () => {
         loadData();
     },[])
 
+    useEffect(()=>{
+        if(sortDesc) availableVehicles.sort((a,b)=>{if(a.pricePerDay<b.pricePerDay)return 1; return -1;})
+        else availableVehicles.sort((a,b)=>{if(a.pricePerDay>b.pricePerDay)return 1; return -1;})
+    }, [sortDesc])
+
     async function searchFunc(){
         console.log({city,company,startDate,endDate});
         let x = await searchAvailableVehicles(city,company,startDate,endDate);
@@ -88,7 +97,9 @@ const ClientHomePage = () => {
        
       </div>
       <div>
-        <button className='searchButton' onClick={searchFunc}>Search</button>
+        <button className='searchButton' onClick={searchFunc} style={{marginRight:"30px"}}>Search</button>
+        {!sortDesc? <button className='sortBtn' onClick={e=>setSort(true)}>Sort DESC<span className="iconSortDesc"></span></button>:<button className='sortBtn' onClick={e=>setSort(false)}><span className="iconSortAsc"></span> Sort ASC</button>}
+
       </div>
 
       <Vehicles vehicles={availableVehicles} dayDiff={daysDiff()}></Vehicles>
