@@ -73,7 +73,24 @@ export async function registerClient(firstName, lastName, email, username, passw
         }
     })
   }
-
+  export async function getAllCities() {
+    const url = "http://localhost:8081/api/company/getCities";
+  
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
 
 // MANAGER
   export async function registerManager(email, username, phoneNumber, password,firstName,lastName,companyName,birthDate) {

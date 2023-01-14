@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Vehicles from '../components/Vehicles';
-import { searchAvailableVehicles, getAllCompanies } from '../web2Communication';
+import { searchAvailableVehicles, getAllCompanies, getAllCities } from '../web2Communication';
 
 const ClientHomePage = () => {
 
@@ -22,19 +22,32 @@ const ClientHomePage = () => {
     async function loadData(){
 
         let companySelect = document.getElementById("companySelect");
+        let citySelect = document.getElementById("citySelect");
         
 
-        let x = await getAllCompanies();
-        for (var i = 0; i < x.length; i++) {
+        let companies = await getAllCompanies();
+        for (var i = 0; i < companies.length; i++) {
             let option = document.createElement("option");
-            option.setAttribute('value', x[i]["id"]);
+            option.setAttribute('value', companies[i]["id"]);
 
-            let optionText = document.createTextNode(x[i]["name"]);
+            let optionText = document.createTextNode(companies[i]["name"]);
             option.appendChild(optionText);
 
             companySelect.appendChild(option);
-            console.log(x[i])
-            //Do something
+            //console.log(companies[i])
+        }
+
+        let cities = await getAllCities();
+        for(var i = 0; i<cities.length; i++){
+            let option = document.createElement("option");
+            option.setAttribute('value', cities[i]);
+
+            let optionText = document.createTextNode(cities[i]);
+            option.appendChild(optionText);
+
+            citySelect.appendChild(option);
+
+            //console.log(cities[i]);
         }
     }
 
@@ -54,11 +67,13 @@ const ClientHomePage = () => {
       <div style={{display:"flex", marginTop:"20px", columnGap:"20px", justifyContent:"space-around"}}>
         <div>
             <p>City:</p>
-            <input type="text" onChange={(e) => setCity(e.target.value)} ></input>
+            <select id='citySelect' onChange={(e) => setCity(e.target.value)} defaultValue={'DEFAULT'} style={{width:"200px", height:"45px", padding:"10px 15px"}}>
+                <option disabled value={"DEFAULT"}>Choose city</option>
+            </select>
         </div>
         <div>
             <p>Company:</p>
-            <select id='companySelect' onChange={(e) => setCompany(e.target.value)} defaultValue={'DEFAULT'}>
+            <select id='companySelect' onChange={(e) => setCompany(e.target.value)} defaultValue={'DEFAULT'} style={{width:"200px", height:"45px", padding:"10px 15px"}}>
                 <option disabled value={"DEFAULT"}>Choose company</option>
             </select>
         </div>
