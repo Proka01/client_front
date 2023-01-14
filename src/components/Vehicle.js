@@ -1,6 +1,15 @@
 import React from 'react'
+import { createReservation } from '../web2Communication'
 
 const Vehicle = ({car, dayDiff}) => {
+
+  async function makeReservation(){
+    console.log(car.id,car.startDate,car.endDate,car.companyId)
+    let response = await createReservation(car.id,car.startDate,car.endDate, car.companyId, localStorage.getItem("Token"));
+    console.log(String(localStorage.getItem("Token")))
+    console.log("response :" + response);
+  }
+
   return (
     <div className='vehicle' style={{width:"50%", marginLeft:"auto", marginRight:"auto", marginTop:"80px"}}>
         <div><h1>{car.brand + " " + car.model}</h1></div>
@@ -11,7 +20,7 @@ const Vehicle = ({car, dayDiff}) => {
             </div>
             <div>
                 <h2>Price: {dayDiff*car.pricePerDay} eur</h2>
-                <button className='reservationButton' style={{marginTop:"20px"}}>Make reservation</button>
+                <button className='reservationButton' style={{marginTop:"20px"}} onClick={makeReservation}>Make reservation</button>
             </div>
         </div>
     </div>

@@ -95,6 +95,7 @@ input {
 	padding: 15px 10px;
 
   }
+  .reservationButton:hover {background-color: #3e8e41}
   .iconSortDesc{
 	background: url(assets/sortDesc.png) no-repeat;
     float: right;
@@ -116,3 +117,4 @@ input {
 	cursor: pointer;
 	font-size: 14px;
   }
+  .sortBtn:hover {background-color: #3e8e41}

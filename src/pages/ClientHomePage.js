@@ -67,6 +67,12 @@ const ClientHomePage = () => {
     async function searchFunc(){
         console.log({city,company,startDate,endDate});
         let x = await searchAvailableVehicles(city,company,startDate,endDate);
+        for(var i = 0; i<x.length; i++){
+            console.log(x[i].model)
+            x[i].startDate = startDate;
+            x[i].endDate = endDate;
+            x[i].companyId = company;
+        }
         console.log(x);
         setAvailableVehicles(x);
     }

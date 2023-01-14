@@ -28,8 +28,8 @@ export async function registerClient(firstName, lastName, email, username, passw
         if(response.ok){
             return response.json().then(json => {
                 const ret = json;
-                console.log("Token: " + ret);
-                return ret;
+                //console.log("Token: " + ret["token"]);
+                return ret["token"];
               });
         }
     })
@@ -81,6 +81,30 @@ export async function registerClient(firstName, lastName, email, username, passw
       headers: {
         'Content-Type': 'application/json',
       },
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
+
+
+  export async function createReservation(vehicleId, startDate, endDate, companyId,token) {
+    const url = "http://localhost:8081/api/reservation";
+    var bearer = 'Bearer ' + token;
+
+  
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+      body: JSON.stringify({vehicleId,companyId, startDate, endDate})
     })
     .then(response => {
         if(response.ok){
