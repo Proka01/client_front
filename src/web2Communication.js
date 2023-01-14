@@ -27,8 +27,47 @@ export async function registerClient(firstName, lastName, email, username, passw
     .then(response => {
         if(response.ok){
             return response.json().then(json => {
-                const ret = json["token"];
+                const ret = json;
                 console.log("Token: " + ret);
+                return ret;
+              });
+        }
+    })
+  }
+
+  export async function searchAvailableVehicles(city, companyId, startDate, endDate) {
+    const url = "http://localhost:8081/api/vehicle/search";
+  
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({city,companyId, startDate, endDate})
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
+
+  export async function getAllCompanies() {
+    const url = "http://localhost:8081/api/company";
+  
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
                 return ret;
               });
         }

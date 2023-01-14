@@ -21,10 +21,15 @@ const ClientLoginPage = () => {
 
 	//web2 http request
 	let token = await clientLogin(username, password);
-	localStorage.setItem("Token",token);
+
+	if(token!=undefined){
+		localStorage.setItem("Token",token);
 	
-	console.log("Token from JSON:");
-	console.log(token);
+		console.log("Token from JSON:");
+		console.log(token);
+
+		navigate("/clientHomePage");
+	}
 
     // setPassword("");
     // setUsername("");
