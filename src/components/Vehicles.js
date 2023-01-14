@@ -1,12 +1,13 @@
 import React from 'react'
+import Vehicle from './Vehicle';
 
-const Vehicles = ({vehicles}) => {
+const Vehicles = ({vehicles, dayDiff}) => {
   return (
     <div>
         {
         vehicles.map((item,ind) => {
                 return (
-                  <div key={item.id}>{item.model}</div>
+                  <Vehicle key={item.id} car={item} dayDiff={dayDiff}></Vehicle>
                 );
                 })}
     </div>

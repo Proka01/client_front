@@ -11,6 +11,14 @@ const ClientHomePage = () => {
     const[availableVehicles, setAvailableVehicles] = useState([]);
 
 
+    function daysDiff(){
+        let date_1 = new Date(endDate);
+        let date_2 = new Date(startDate);
+        let difference = date_1.getTime() - date_2.getTime();
+        let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+        return TotalDays;
+    }
+
     async function loadData(){
 
         let companySelect = document.getElementById("companySelect");
@@ -68,7 +76,7 @@ const ClientHomePage = () => {
         <button className='searchButton' onClick={searchFunc}>Search</button>
       </div>
 
-      <Vehicles vehicles={availableVehicles}></Vehicles>
+      <Vehicles vehicles={availableVehicles} dayDiff={daysDiff()}></Vehicles>
 
         
     </div>

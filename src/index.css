@@ -73,10 +73,25 @@ input {
 	background-color: green; /* Green */
 	border: none;
 	color: white;
-	padding: 15px 32px;
+	padding: 15px 40px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 16px;
+	font-size: 26px;
 	cursor: pointer;
+  }
+
+  .vehicle{
+	border: 6px solid green;
+	border-radius: 16px;
+  }
+
+  .reservationButton{
+	background-color: green;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-size: 18px;
+	padding: 15px 10px;
+
   }
