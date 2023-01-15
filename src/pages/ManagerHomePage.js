@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { addVehicleToCompany, deleteCompanyVehicle, getAllTypes, getCompanyInfo, getCompanyVehicles, updateCompanyInfo } from '../web2Communication'
+import { addVehicleToCompany, deleteCompanyVehicle, getAllTypes, getCompanyInfo, getCompanyVehicles, updateCompanyInfo, updateCompanyVehicle } from '../web2Communication'
 
 const ManagerHomePage = () => {
 
@@ -49,7 +49,7 @@ const ManagerHomePage = () => {
     if(model && brand && registration && price && newVehicleType!=undefined){
       console.log({model,brand,registration,price,newVehicleType})
       let response = await addVehicleToCompany(model,brand,registration,newVehicleType,price);
-      if(response["message"].includes("Successfully")){
+      if(response["message"]!=undefined && response["message"].includes("Successfully")){
         console.log("Success" + response);
         loadData();
       }
@@ -61,10 +61,33 @@ const ManagerHomePage = () => {
     console.log(vehicle.id);
     let response = await deleteCompanyVehicle(vehicle.id);
 
-    if(response["message"].includes("Successfully")){
+    if(response["message"]!=undefined && response["message"].includes("Successfully")){
       console.log("Success" + response);
       loadData();
     }
+  }
+
+  async function updateVehicle(vehicle){
+    let model = document.getElementById(vehicle.id+"ModelInput").value;
+
+    let brand = document.getElementById(vehicle.id+"BrandInput").value;
+
+    let registration = document.getElementById(vehicle.id+"RegistrationInput").value;
+
+    let price = document.getElementById(vehicle.id+"PriceInput").value;
+
+    console.log({model,brand,registration,price})
+
+    if(model && brand && registration && price){
+      console.log({model,brand,registration,price,newVehicleType})
+      let response = await updateCompanyVehicle(vehicle.id, model,brand,registration,newVehicleType,price);
+      
+      if(response["message"]!=undefined && response["message"].includes("Successfully")){
+        console.log("Success" + response);
+        loadData();
+      }
+    }
+
   }
 
   async function updateInfo(){
@@ -170,25 +193,25 @@ const ManagerHomePage = () => {
                 <h2>Vehicle #{item.id}</h2>
                 <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px"}}>
                   <h3 style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}}>Model: </h3>
-                  <input style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.model} type="text" required/>
+                  <input id={item.id+"ModelInput"} style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.model} type="text" required/>
                 </div>
                 
                 <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px"}}>
                   <h3 style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}}>Brand: </h3>
-                  <input style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.brand} type="text" required/>
+                  <input id={item.id+"BrandInput"} style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.brand} type="text" required/>
                 </div>
 
                 <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px"}}>
                   <h3 style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}}>Registration: </h3>
-                  <input style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.registration} type="text" required/>
+                  <input id={item.id+"RegistrationInput"} style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.registration} type="text" required/>
                 </div>
                 <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px", marginBottom:"20px"}}>
                   <h3 style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}}>Price per day: </h3>
-                  <input style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.pricePerDay} type="text" required/>
+                  <input id={item.id+"PriceInput"} style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.pricePerDay} type="text" required/>
                 </div>
 
                 <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px", marginBottom:"20px"}}>
-                  <button style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}} className="saveBtn">Save changes</button>
+                  <button onClick={e=>updateVehicle(item)} style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}} className="saveBtn">Save changes</button>
                   <button onClick={e=>deleteVehicle(item)} style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginRight:"10%"}} className='deleteBtn' type="text" required>
                     Delete vehicle
                   </button>

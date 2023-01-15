@@ -325,6 +325,28 @@ export async function registerClient(firstName, lastName, email, username, passw
     })
   }
 
+  export async function updateCompanyVehicle(vehicleId, model, brand, registration, pricePerDay) {
+    const url = "http://localhost:8081/api/vehicle";
+    var bearer = 'Bearer ' + localStorage.getItem("Token");
+  
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+      body: JSON.stringify({vehicleId, model, brand, registration, pricePerDay})
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
+
   
 // ADMIN
 export async function adminLogin(username, password) {
