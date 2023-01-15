@@ -31,6 +31,10 @@ const ClientHomePage = () => {
         
 
         let companies = await getAllCompanies();
+        while (companySelect.options.length > 1) {
+            companySelect.remove(companySelect.length-1);
+          }
+          
         for (var i = 0; i < companies.length; i++) {
             let option = document.createElement("option");
             option.setAttribute('value', companies[i]["id"]);
@@ -40,9 +44,14 @@ const ClientHomePage = () => {
 
             companySelect.appendChild(option);
             //console.log(companies[i])
+            
         }
 
         let cities = await getAllCities();
+        while (citySelect.options.length > 1) {
+            citySelect.remove(citySelect.length-1);
+        }
+          
         for(var i = 0; i<cities.length; i++){
             let option = document.createElement("option");
             option.setAttribute('value', cities[i]);
