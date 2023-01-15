@@ -18,10 +18,13 @@ const ManagerLoginPage = () => {
 
         //web2 http request
         let token = await managerLoing(username, password);
-        localStorage.setItem("Token",token);
+        if(token!=undefined){
+            localStorage.setItem("Token",token);
+            navigate("/managerHomePage");
+            console.log("Token from JSON:");
+            console.log(token);
+        }
         
-        console.log("Token from JSON:");
-        console.log(token);
 
         // setPassword("");
         // setUsername("");

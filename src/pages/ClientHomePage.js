@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Vehicles from '../components/Vehicles';
 import { searchAvailableVehicles, getAllCompanies, getAllCities, getReservations, cancelReservation } from '../web2Communication';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faCartArrowDown } from '@fortawesome/fontawesome-free-solid';
-import fontawesome from '@fortawesome/fontawesome'
+import { useNavigate } from 'react-router-dom';
 
 const ClientHomePage = () => {
 
@@ -15,6 +13,7 @@ const ClientHomePage = () => {
     const[sortDesc, setSort] = useState(false);
     const[myReservations, setMyReservation] = useState([]);
     const[render, setRender] = useState(false);
+    const navigate = useNavigate();
 
 
     function daysDiff(){
@@ -124,7 +123,7 @@ const ClientHomePage = () => {
       <div>
         <button className='searchButton' onClick={searchFunc} style={{marginRight:"30px"}}>Search</button>
         {!sortDesc? <button className='sortBtn' onClick={e=>setSort(true)}>Sort DESC<span className="iconSortDesc"></span></button>:<button className='sortBtn' onClick={e=>setSort(false)}><span className="iconSortAsc"></span> Sort ASC</button>}
-
+        <button className='sortBtn' style={{marginLeft:"30px"}} onClick={e=>{navigate("../reviewPage")}}>Leave a review</button>
       </div>
       <div style={{display:"flex", justifyContent:"space-around"}}>
         <div style={{width:"60%"}}>
