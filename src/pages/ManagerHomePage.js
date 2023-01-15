@@ -79,8 +79,8 @@ const ManagerHomePage = () => {
     console.log({model,brand,registration,price})
 
     if(model && brand && registration && price){
-      console.log({model,brand,registration,price,newVehicleType})
-      let response = await updateCompanyVehicle(vehicle.id, model,brand,registration,newVehicleType,price);
+      console.log({model,brand,registration,price})
+      let response = await updateCompanyVehicle(vehicle.id, model,brand,registration,price);
       
       if(response["message"]!=undefined && response["message"].includes("Successfully")){
         console.log("Success" + response);
