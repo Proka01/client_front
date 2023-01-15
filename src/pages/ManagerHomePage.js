@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { addVehicleToCompany, getAllTypes, getCompanyInfo, updateCompanyInfo } from '../web2Communication'
+import { addVehicleToCompany, deleteCompanyVehicle, getAllTypes, getCompanyInfo, getCompanyVehicles, updateCompanyInfo } from '../web2Communication'
 
 const ManagerHomePage = () => {
 
   const [company, setCompany] = useState({name:''});
   const [newVehicleType, setNewVehicleType] = useState();
+  const [companyVehicles, setCompanyVehicles] = useState([]);
 
   async function loadData(){
     let companyL = await getCompanyInfo();
@@ -16,6 +17,10 @@ const ManagerHomePage = () => {
     let types = await getAllTypes();
     let typeSelect = document.getElementById("typeSelect");
 
+    while (typeSelect.options.length > 1) {
+      typeSelect.remove(typeSelect.length-1);
+    }
+    
     for (var i = 0; i < types.length; i++) {
       let option = document.createElement("option");
       option.setAttribute('value', types[i]["id"]);
@@ -26,6 +31,11 @@ const ManagerHomePage = () => {
       typeSelect.appendChild(option);
       //console.log(companies[i])
     }
+
+    let vehicles = await getCompanyVehicles();
+    setCompanyVehicles(vehicles);
+    input.value = vehicles.length;
+    //console.log(vehicles);
 
   }
 
@@ -39,9 +49,22 @@ const ManagerHomePage = () => {
     if(model && brand && registration && price && newVehicleType!=undefined){
       console.log({model,brand,registration,price,newVehicleType})
       let response = await addVehicleToCompany(model,brand,registration,newVehicleType,price);
-      console.log(response);
+      if(response["message"].includes("Successfully")){
+        console.log("Success" + response);
+        loadData();
+      }
     }
 
+  }
+
+  async function deleteVehicle(vehicle){
+    console.log(vehicle.id);
+    let response = await deleteCompanyVehicle(vehicle.id);
+
+    if(response["message"].includes("Successfully")){
+      console.log("Success" + response);
+      loadData();
+    }
   }
 
   async function updateInfo(){
@@ -58,6 +81,7 @@ const ManagerHomePage = () => {
       },3000)
     }
   }
+  
 
   useEffect(()=>{
     loadData();
@@ -101,41 +125,78 @@ const ManagerHomePage = () => {
       <div style={{marginTop:"20px"}}>
         <h1>Add vehicle</h1>
         <div style={{display:"flex", marginTop:"20px", columnGap:"20px", justifyContent:"space-around"}}>
-          <div style={{width:"20%"}}>
+          <div style={{width:"15%"}}>
               <div style={{display:"flex", justifyContent:"space-between", marginBottom:"10px"}}>
                 <p style={{fontSize:"20px"}}>Model:</p>
               </div>
               <input className='infoInput' id='modelInput' style={{fontSize:"16px"}} placeholder={"Enter new company name"}></input>
           </div>
-          <div style={{width:"20%"}}>
+          <div style={{width:"15%"}}>
               <div style={{display:"flex", justifyContent:"space-between", marginBottom:"10px"}}>
                 <p style={{fontSize:"20px"}}>Brand:</p>
               </div>
               <input className='infoInput' id='brandInput' style={{fontSize:"16px"}} placeholder={"Enter new company name"}></input>
           </div>
-          <div style={{width:"20%"}}>
+          <div style={{width:"15%"}}>
               <div style={{display:"flex", justifyContent:"space-between", marginBottom:"10px"}}>
                 <p style={{fontSize:"20px"}}>Registration:</p>
               </div>
               <input className='infoInput' id='registrationInput' style={{fontSize:"16px"}} placeholder={"Enter new company name"}></input>
           </div>
-          <div style={{width:"20%"}}>
+          <div style={{width:"15%"}}>
               <div style={{display:"flex", justifyContent:"space-between", marginBottom:"10px"}}>
                 <p style={{fontSize:"20px"}}>Price per day:</p>
               </div>
               <input className='infoInput' id='priceInput' style={{fontSize:"16px"}} placeholder={"Enter new company name"}></input>
           </div>
           
-          <div style={{width:"20%"}}>
+          <div style={{width:"15%"}}>
               <div style={{display:"flex", justifyContent:"space-between", marginBottom:"10px"}}>
-                <p style={{fontSize:"20px"}}>Model:</p>
+                <p style={{fontSize:"20px"}}>Vehicle type:</p>
               </div>
-              <select id='typeSelect' className='infoInput' onChange={(e) => {setNewVehicleType(e.target.value); }} defaultValue={'DEFAULT'} style={{width:"200px", height:"45px", fontSize:"16px"}}>
+              <select id='typeSelect' className='infoInput' onChange={(e) => {setNewVehicleType(e.target.value); }} defaultValue={'DEFAULT'} style={{width:"100%", height:"45px", fontSize:"16px"}}>
                 <option disabled value={"DEFAULT"}>Choose vehicle type</option>
             </select>
           </div>
         </div>
         <button className='sortBtn' onClick={addVehicle}>Confirm</button>
+      </div>
+
+      <div style={{overflow:"hidden"}}>
+      {
+        companyVehicles.map((item,ind) => {
+          return (
+              <div key={ind} style={{width:"45%", float:"left", alignItems:"center", marginTop:"20px", border:"4px solid green", marginLeft:"3%", borderRadius:"8px"}}>
+                <h2>Vehicle #{item.id}</h2>
+                <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px"}}>
+                  <h3 style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}}>Model: </h3>
+                  <input style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.model} type="text" required/>
+                </div>
+                
+                <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px"}}>
+                  <h3 style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}}>Brand: </h3>
+                  <input style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.brand} type="text" required/>
+                </div>
+
+                <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px"}}>
+                  <h3 style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}}>Registration: </h3>
+                  <input style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.registration} type="text" required/>
+                </div>
+                <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px", marginBottom:"20px"}}>
+                  <h3 style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}}>Price per day: </h3>
+                  <input style={{marginTop:"auto", marginBottom:"auto", fontSize:"16px", width:"250px", marginRight:"10%"}} className='infoInput' defaultValue={item.pricePerDay} type="text" required/>
+                </div>
+
+                <div style={{display:"flex", justifyContent:"space-between", marginTop:"20px", marginBottom:"20px"}}>
+                  <button style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginLeft:"20%"}} className="saveBtn">Save changes</button>
+                  <button onClick={e=>deleteVehicle(item)} style={{marginTop:"auto", marginBottom:"auto", fontSize:"22px", marginRight:"10%"}} className='deleteBtn' type="text" required>
+                    Delete vehicle
+                  </button>
+                </div>
+                
+              </div>
+            );
+          })}
       </div>
     </div>
   )
