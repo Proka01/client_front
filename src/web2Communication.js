@@ -1,3 +1,5 @@
+import { json } from "react-router-dom";
+
 //CLIENT
 export async function registerClient(firstName, lastName, email, username, password, phoneNumber, passportNumber, birthDate) {
 
@@ -190,6 +192,49 @@ export async function registerClient(firstName, lastName, email, username, passw
             return response.json().then(json => {
                 const ret = json["token"];
                 console.log("Token: " + ret);
+                return ret;
+              });
+        }
+    })
+  }
+
+  export async function getCompanyInfo() {
+    const url = "http://localhost:8081/api/company/getInfo";
+    var bearer = 'Bearer ' + localStorage.getItem("Token");
+  
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
+
+  export async function updateCompanyInfo(name, description) {
+    const url = "http://localhost:8081/api/company/updateCompany";
+    var bearer = 'Bearer ' + localStorage.getItem("Token");
+  
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+      body: JSON.stringify({name, description})
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
                 return ret;
               });
         }

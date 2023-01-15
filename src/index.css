@@ -130,3 +130,29 @@ input {
   }
   .cancelReservationBtn:hover {background-color: #3e8e41;	border: 2px solid green;
   }
+
+  .infoInput{
+	width: 100%;
+	border: 3px solid green;
+	border-radius: 6px;
+	font-size: 20px;
+  }
+
+  .infoInput:focus{
+	outline: none !important;
+	border: 3px solid rgb(36, 183, 90);
+  }
+
+  .updateBtn{
+	background-color: white;
+	color: black;
+	border: 2px solid green;
+	border-radius: 5px;
+	padding: 15px 40px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 26px;
+	cursor: pointer;
+  }
+  .updateBtn:hover {background-color: #3e8e41}
+
