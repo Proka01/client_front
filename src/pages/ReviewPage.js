@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllCities, getAllCompanies, getAllReviews } from '../web2Communication';
+import { getAllCities, getAllCompanies, getAllReviews, getAverageRatings } from '../web2Communication';
 
 const ReviewPage = () => {
   const[city,setCity] = useState();
@@ -7,6 +7,7 @@ const ReviewPage = () => {
   const[company,setCompany] = useState();
 
   const[allReviews, setAllReviews] = useState([]); 
+  const[ratings, setRatings] = useState([]);
 
   async function loadData(){
 
@@ -43,10 +44,14 @@ const ReviewPage = () => {
 
         citySelect.appendChild(option);
     }
+
+    let rating = await getAverageRatings();
+    setRatings(rating);
+    //console.log(ratings);
 }
 
   async function searchReviews(){
-    console.log({city, company})
+    //console.log({city, company})
     let reviews = await getAllReviews(company, city);
     setAllReviews(reviews);
     //console.log(reviews);
@@ -83,7 +88,7 @@ useEffect(()=>{
             {
             allReviews.map((item,ind) => {
               return (
-                  <div style={{border:"4px solid green", borderRadius:"16px", marginTop:"20px", width:"80%",
+                  <div key={ind} style={{border:"4px solid green", borderRadius:"16px", marginTop:"20px", width:"80%",
                    marginLeft:"auto", marginRight:"auto", overflow:"hidden"}}>
                     <h1>Review #{item.id}</h1>
                     <div style={{display:"flex", justifyContent:"space-around", marginTop:"10px"}}>
@@ -98,9 +103,23 @@ useEffect(()=>{
             </div>
           </div>
           
-          <div style={{width:"50%", height:"100px" , backgroundColor:"blue"}}>
+          <div style={{width:"35%", height:"100px" , backgroundColor:"blue"}}>
 
           </div>
+
+          <div style={{width:"20%", height:"100px" ,  textAlign:"center", marginLeft:"2%"}}>
+            <h2>Average rating</h2>
+          {
+            ratings.map((item,ind) => {
+              return (
+                  <div key={ind} style={{borderBottom:"2px solid green", display:'flex', justifyContent:"space-around", marginTop:"20px"}}>
+                      <p>Company: <h3>{item.company.name}</h3></p>
+                      <p>Average: <h3>{item.avg}*</h3></p>
+                  </div>
+                );
+              })}
+          </div>
+
        </div>
     </div>
   )
