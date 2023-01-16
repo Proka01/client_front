@@ -207,3 +207,20 @@ input {
   .reviewSearchButton:hover{
 	background-color: rgb(19, 168, 19);
   }
+
+
+  .reviewSendButton{
+	background-color: green; /* Green */
+	border: none;
+	border-radius: 12px;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+	cursor: pointer;
+  }
+  .reviewSendButton:hover{
+	background-color: rgb(19, 168, 19);
+  }

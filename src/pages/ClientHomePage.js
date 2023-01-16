@@ -142,7 +142,7 @@ const ClientHomePage = () => {
             {
             myReservations.map((item,ind) => {
                 return (
-                  <div id={ind} style={{border:"3px solid green", borderRadius:"8px", width:"100%", position:"relative"}}>
+                  <div key={ind} style={{border:"3px solid green", borderRadius:"8px", width:"100%", position:"relative", marginTop:"20px"}}>
                         <h2>Resevation #{item.id}</h2>
                         <div style={{display:"flex", overflow:"hidden", marginLeft:"10px", marginBottom:"10px"}}>
                             <p>Vehicle:</p>
