@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Vehicles from '../components/Vehicles';
-import { searchAvailableVehicles, getAllCompanies, getAllCities } from '../web2Communication';
+import { searchAvailableVehicles, getAllCompanies, getAllCities, getReservations, cancelReservation } from '../web2Communication';
+import { useNavigate } from 'react-router-dom';
 
 const ClientHomePage = () => {
 
@@ -9,6 +10,10 @@ const ClientHomePage = () => {
     const[startDate, setStartDate] = useState();
     const[endDate, setEndDate] = useState();
     const[availableVehicles, setAvailableVehicles] = useState([]);
+    const[sortDesc, setSort] = useState(false);
+    const[myReservations, setMyReservation] = useState([]);
+    const[render, setRender] = useState(false);
+    const navigate = useNavigate();
 
 
     function daysDiff(){
@@ -26,6 +31,10 @@ const ClientHomePage = () => {
         
 
         let companies = await getAllCompanies();
+        while (companySelect.options.length > 1) {
+            companySelect.remove(companySelect.length-1);
+          }
+          
         for (var i = 0; i < companies.length; i++) {
             let option = document.createElement("option");
             option.setAttribute('value', companies[i]["id"]);
@@ -35,9 +44,14 @@ const ClientHomePage = () => {
 
             companySelect.appendChild(option);
             //console.log(companies[i])
+            
         }
 
         let cities = await getAllCities();
+        while (citySelect.options.length > 1) {
+            citySelect.remove(citySelect.length-1);
+        }
+          
         for(var i = 0; i<cities.length; i++){
             let option = document.createElement("option");
             option.setAttribute('value', cities[i]);
@@ -51,15 +65,43 @@ const ClientHomePage = () => {
         }
     }
 
+    async function loadReservations(){
+        setMyReservation([])
+        let reservations = await getReservations();
+        setMyReservation(reservations)
+    }
+
     useEffect(()=>{
         loadData();
+        loadReservations();
     },[])
+
+    useEffect(()=>{
+        loadReservations();
+        searchFunc();
+    },[render])
+
+    useEffect(()=>{
+        if(sortDesc) availableVehicles.sort((a,b)=>{if(a.pricePerDay<b.pricePerDay)return 1; return -1;})
+        else availableVehicles.sort((a,b)=>{if(a.pricePerDay>b.pricePerDay)return 1; return -1;})
+    }, [sortDesc])
 
     async function searchFunc(){
         console.log({city,company,startDate,endDate});
         let x = await searchAvailableVehicles(city,company,startDate,endDate);
+        for(var i = 0; i<x.length; i++){
+            console.log(x[i].model)
+            x[i].startDate = startDate;
+            x[i].endDate = endDate;
+            x[i].companyId = company;
+        }
         console.log(x);
         setAvailableVehicles(x);
+    }
+
+    async function cancel(id){
+        await cancelReservation(id); 
+        setRender(!render)
     }
 
   return (
@@ -88,10 +130,49 @@ const ClientHomePage = () => {
        
       </div>
       <div>
-        <button className='searchButton' onClick={searchFunc}>Search</button>
+        <button className='searchButton' onClick={searchFunc} style={{marginRight:"30px"}}>Search</button>
+        {!sortDesc? <button className='sortBtn' onClick={e=>setSort(true)}>Sort DESC<span className="iconSortDesc"></span></button>:<button className='sortBtn' onClick={e=>setSort(false)}><span className="iconSortAsc"></span> Sort ASC</button>}
+        <button className='sortBtn' style={{marginLeft:"30px"}} onClick={e=>{navigate("../reviewPage")}}>Leave a review</button>
       </div>
+      <div style={{display:"flex", justifyContent:"space-around"}}>
+        <div style={{width:"60%"}}>
+            <Vehicles vehicles={availableVehicles} dayDiff={daysDiff()} render={render} setRender={setRender}></Vehicles>
+        </div>
+        <div style={{width:"20%"}}>
+            {
+            myReservations.map((item,ind) => {
+                return (
+                  <div key={ind} style={{border:"3px solid green", borderRadius:"8px", width:"100%", position:"relative", marginTop:"20px"}}>
+                        <h2>Resevation #{item.id}</h2>
+                        <div style={{display:"flex", overflow:"hidden", marginLeft:"10px", marginBottom:"10px"}}>
+                            <p>Vehicle:</p>
+                            <h3 style={{fontSize:"16px", marginLeft:"10px"}}>{item.vehicle.brand} {item.vehicle.model}</h3>
+                        </div>
+                        <div style={{display:"flex", overflow:"hidden", marginLeft:"10px", marginBottom:"10px"}}>
+                            <p>From:</p>
+                            <h3 style={{fontSize:"16px", marginLeft:"10px"}}>{item.startDate}</h3>
+                        </div>
 
-      <Vehicles vehicles={availableVehicles} dayDiff={daysDiff()}></Vehicles>
+                        <div style={{display:"flex", overflow:"hidden", marginLeft:"10px", marginBottom:"10px"}}>
+                            <p>To:</p>
+                            <h3 style={{fontSize:"16px", marginLeft:"10px"}}>{item.endDate}</h3>
+                        </div>
+
+                        <div style={{display:"flex", overflow:"hidden", marginLeft:"10px", marginBottom:"10px"}}>
+                            <p>Total price:</p>
+                            <h3 style={{fontSize:"16px", marginLeft:"10px"}}>{item.totalPrice} eur</h3>
+                        </div>
+
+                        <div style={{position:"absolute", bottom:"10px", right:"2px"}}>
+                            <button className='cancelReservationBtn' onClick={e=>cancel(item.id)}>Cancel reservation</button>
+                        </div>
+
+                  </div>
+                );
+                })}
+        </div>
+      </div>
+      
 
         
     </div>
