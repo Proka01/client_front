@@ -57,5 +57,6 @@
 
 .notifDiv
 {
-    background-color: antiquewhite;
+    overflow-y: auto;
+    height:400px;
 }

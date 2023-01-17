@@ -213,6 +213,29 @@ export async function registerClient(firstName, lastName, email, username, passw
     })
   }
 
+  export async function getAllClientNotifications(token) {
+    const url = "http://localhost:8080/api/notification/getNotificationsForClientId";
+    var bearer = 'Bearer ' + token;
+
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+      // body: JSON.stringify({value})
+    })
+    .then(response => {
+        if(response.ok){
+          return response.json().then(json => {
+            const ret = json;
+            console.log(ret);
+            return ret;
+          });
+        }
+    })
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////
 
