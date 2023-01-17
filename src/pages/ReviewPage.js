@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createReview, getAllCities, getAllCompanies, getAllReviews, getAverageRatings, getReservationsNotReviewed } from '../web2Communication';
+import { createReview, deleteReview, getAllCities, getAllCompanies, getAllReviews, getAverageRatings, getReservationsNotReviewed, getUserReviews, updateReview } from '../web2Communication';
 import ProbaPage from './ProbaPage';
 
 const ReviewPage = () => {
@@ -11,6 +11,7 @@ const ReviewPage = () => {
   const[ratings, setRatings] = useState([]);
   const[NotReviewed, setNotReviewed] = useState([]);
   const[selectedReservation, setSelectedReservation] = useState({});
+  const[myReviews, setMyReviews] = useState([]);
 
   async function loadData(){
 
@@ -50,7 +51,7 @@ const ReviewPage = () => {
 
     let rating = await getAverageRatings();
     setRatings(rating);
-    //console.log(ratings);
+    console.log(rating);
 
     let notReviewed = await getReservationsNotReviewed();
     setNotReviewed(notReviewed);
@@ -59,7 +60,7 @@ const ReviewPage = () => {
       reservationSelect.remove(reservationSelect.length-1);
     }
     for(var i = 0; i<notReviewed.length; i++){
-      console.log(notReviewed[i])
+      //console.log(notReviewed[i])
       let option = document.createElement("option");
       option.setAttribute('value', i);
 
@@ -69,8 +70,10 @@ const ReviewPage = () => {
       reservationSelect.appendChild(option);
     }
 
-
-    //console.log(notReviewed);
+    let loadReviews = await getUserReviews();
+    //console.log("gas")
+    setMyReviews(loadReviews);
+    console.log(loadReviews);
   }
 
   async function searchReviews(){
@@ -83,7 +86,7 @@ const ReviewPage = () => {
   function changeSelectedReservation(reservationInd){
     let res = NotReviewed[reservationInd];
     setSelectedReservation(res);
-    console.log(NotReviewed[reservationInd]);
+    //console.log(NotReviewed[reservationInd]);
     let lbl = document.getElementById("infoReservationLabel");
     lbl.innerHTML = 'Info: ' + res.vehicle.brand + ' ' +res.vehicle.model + ' from ' + res.startDate + ' to ' + res.endDate;
 
@@ -95,10 +98,32 @@ const ReviewPage = () => {
     let comment = document.getElementById("commentInput").value;
 
     if(selectedReservation.id!=undefined && comment){
-      console.log({selectedReservation, comment, rating})
+      //console.log({selectedReservation, comment, rating})
       let response = await createReview(selectedReservation.id, rating, comment);
       if(response["message"]!=undefined && response["message"].includes("Successfully")){
         alert("Successfully created review");
+        loadData();
+      }
+    }
+  }
+
+  async function deleteReviewFunc(review){
+    let response = await deleteReview(review.id);
+    if(response["message"]!=undefined && response["message"].includes("Successfully")){
+      alert("Successfully deleted review");
+      loadData();
+    }
+  }
+
+  async function updateReviewFunc(review){
+    console.log(review.id)
+    let comment = document.getElementById(review.id+'CommentInput').value;
+    let rating = parseInt(document.getElementById(review.id+'RatingInput').value);
+    
+    if(comment && rating){
+      let response = await updateReview(review.id, rating, comment);
+      if(response["message"]!=undefined && response["message"].includes("Successfully")){
+        alert("Successfully updated review");
         loadData();
       }
     }
@@ -172,6 +197,37 @@ useEffect(()=>{
               
               <button className='reviewSendButton' onClick={sendReview}>Send review </button>
             </div>
+            <div style={{marginTop:"20px"}}>
+              <h2>My Reviews</h2>
+              {
+                myReviews.map((item,ind) => {
+                  return (
+                      <div key={ind} style={{marginTop:"20px",backgroundColor:"white", width:"100%", border:"4px solid #3e8e41",padding:"10px" ,borderRadius:"16px"}}>
+                        <div style={{display:"flex", justifyContent:"space-between"}}>
+                          <h3 style={{marginTop:"auto",marginBottom:"auto", fontSize:"20px"}}>Review #{item.id}</h3>
+                          <button className='deleteReviewBtn' onClick={e=>deleteReviewFunc(item)}>Delete</button>
+                        </div>
+                        <label style={{fontStyle:"italic", display:"block", marginTop:"18px", fontSize:"18px"}}>Info: {item.reservation.vehicle.brand + " " + item.reservation.vehicle.model 
+                        + " rented from company: "+item.reservation.company.name}</label>
+                        
+                        <div style={{marginTop:"10px", fontWeight:"400"}}>
+                          <p>Comment:</p>
+                          <input id={item.id+'CommentInput'} defaultValue={item.comment} style={{width:"100%", fontSize:"16px"}}></input>
+                        </div>
+
+                        <div style={{display:"flex", justifyContent:"space-between"}}>
+                          <div style={{display:"flex"}}>
+                            <p style={{marginTop:"auto", marginBottom:"auto"}}>Rating:</p>
+                            <input id={item.id+'RatingInput'} type={'number'} defaultValue={item.rating} min={1} max={5} style={{marginTop:"auto", marginBottom:"auto",marginLeft:"20px" , fontSize:"14px" ,padding:"2px 10px"}}></input>
+                          </div>
+
+                          <button className='reviewUpdateButton' onClick={e=>updateReviewFunc(item)}>Update review</button>
+                        </div>
+                      
+                      </div>
+                    );
+                  })}
+            </div>
           </div>
 
           <div style={{width:"20%", height:"100px" ,  textAlign:"center", marginLeft:"2%"}}>
@@ -181,7 +237,7 @@ useEffect(()=>{
               return (
                   <div key={item.company.name} style={{borderBottom:"2px solid green", display:'flex', justifyContent:"space-around", marginTop:"20px"}}>
                       <div><p>Company: </p><h3>{item.company.name}</h3></div>
-                      <div><p>Average: </p><h3>{item.avg}*</h3></div>
+                      <div><p>Average: </p><h3>{(item.avg).toFixed(2)}*</h3></div>
                   </div>
                 );
               })}

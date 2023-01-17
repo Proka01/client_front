@@ -224,3 +224,40 @@ input {
   .reviewSendButton:hover{
 	background-color: rgb(19, 168, 19);
   }
+
+  .deleteReviewBtn{
+	background-color: rgb(173, 13, 13); /* Green */
+	border: 2px solid rgb(173, 13, 13);
+	border-radius: 10px;
+	color: white;
+	padding: 5px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+	cursor: pointer;
+  }
+
+  .deleteReviewBtn:hover{
+	border: 2px solid rgb(173, 13, 13);
+	background-color: white;
+	color: rgb(173, 13, 13);
+  }
+
+  .reviewUpdateButton{
+	background-color: #3e8e41; /* Green */
+	border: 2px solid #3e8e41;
+	border-radius: 10px;
+	color: white;
+	padding: 5px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+	cursor: pointer;
+  }
+  .reviewUpdateButton:hover{
+	border: 2px solid #3e8e41;
+	background-color: white;
+	color: #3e8e41;
+  }

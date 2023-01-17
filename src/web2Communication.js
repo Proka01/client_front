@@ -179,7 +179,7 @@ export async function registerClient(firstName, lastName, email, username, passw
         }
     })
   }
-  export async function getAverageRatings(id, city) {
+  export async function getAverageRatings() {
     const url = "http://localhost:8081/api/review/ratings";
   
     return fetch(url, {
@@ -231,6 +231,71 @@ export async function registerClient(firstName, lastName, email, username, passw
         'Authorization' : bearer
       },
       body: JSON.stringify({reservationId, rating, comment})
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
+
+  export async function getUserReviews() {
+    const url = "http://localhost:8081/api/review/userReviews";
+    var bearer = 'Bearer ' + localStorage.getItem("Token");
+
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
+
+  export async function deleteReview(reviewId) {
+    const url = "http://localhost:8081/api/review";
+    var bearer = 'Bearer ' + localStorage.getItem("Token");
+
+    return fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+      body: JSON.stringify({reviewId})
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json().then(json => {
+                const ret = json;
+                return ret;
+              });
+        }
+    })
+  }
+
+  export async function updateReview(reviewId, rating, comment) {
+    const url = "http://localhost:8081/api/review";
+    var bearer = 'Bearer ' + localStorage.getItem("Token");
+
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : bearer
+      },
+      body: JSON.stringify({reviewId, rating, comment})
     })
     .then(response => {
         if(response.ok){
