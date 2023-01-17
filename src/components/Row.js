@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const Row = ({ defaultValue, placeholder }) => {
+const Row = ({ defaultValue, placeholder, title, setAtribute, updateHttpRequest }) => {
     
     const [value, setValue] = useState(defaultValue);
     const [disabled, setDisabled] = useState(true);    
@@ -13,13 +13,16 @@ const Row = ({ defaultValue, placeholder }) => {
         setDisabled(true);
         console.log(">> " + value);
         // save logic goes here
+        setAtribute(value);
+        let response = updateHttpRequest(value, localStorage.getItem("Token"));
+        console.log(response);
       };
 
     return (
         <div>
              <label className="col">
                 <div className="row">
-                    <p className="bold nowrap inline-value-title">Test Name:&nbsp; </p>
+                    <p className="bold nowrap inline-value-title">{title}:&nbsp; </p>
                     <input
                     type="text"
                     className="form-reset inline-input"

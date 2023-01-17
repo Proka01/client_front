@@ -1,0 +1,61 @@
+.rowDiv
+{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftDiv
+{
+    width: 50%;
+    
+}
+
+.rightDiv
+{
+    width: 50%;
+}
+
+.leftRightDiv
+{
+    display: flex;
+}
+
+#clientInfo
+{
+    margin-left: 5px;
+    margin-top: 5px;
+    padding-bottom: 20px;
+}
+
+#notifications
+{
+    margin-top: 5px;
+    padding-bottom: 20px;
+}
+
+.inputDiv
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.buttonDiv
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.hideMe
+{
+    visibility: hidden;
+}
+
+.notifDiv
+{
+    background-color: antiquewhite;
+}
