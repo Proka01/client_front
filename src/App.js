@@ -8,6 +8,7 @@ import ManagerLoginPage from './pages/ManagerLoginPage';
 import ManagerRegisterPage from './pages/ManagerRegisterPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import ClientHomePage from "./pages/ClientHomePage";
+import ClientInfoPage from "./pages/ClientInfoPage";
 
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
         <Route exact path="/managerRegisterPage" element={<ManagerRegisterPage />} />
         <Route exact path="/adminLoginPage" element={<AdminLoginPage />} />
         <Route exact path="/clientHomePage" element={<ClientHomePage/>} />
+        <Route exact path="/clientInfoPage" element={<ClientInfoPage/>} />
+
       </Routes>
    </div>
   );
