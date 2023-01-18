@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Header from '../components/Header';
 import { addVehicleToCompany, deleteCompanyVehicle, getAllTypes, getCompanyInfo, getCompanyVehicles, updateCompanyInfo, updateCompanyVehicle } from '../web2Communication'
 
 const ManagerHomePage = () => {
@@ -112,6 +113,7 @@ const ManagerHomePage = () => {
 
   return (
     <div style={{textAlign:"center"}}>
+      <Header></Header>
       <div>
         <h1 style={{marginTop:"20px"}}>Update company info</h1>
         <div style={{display:"flex", marginTop:"20px", columnGap:"20px", justifyContent:"space-around"}}>

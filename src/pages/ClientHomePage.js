@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Vehicles from '../components/Vehicles';
 import { searchAvailableVehicles, getAllCompanies, getAllCities, getReservations, cancelReservation } from '../web2Communication';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
 const ClientHomePage = () => {
 
@@ -106,6 +107,7 @@ const ClientHomePage = () => {
 
   return (
     <div style={{textAlign:"center"}}>
+        <Header></Header>
       <div style={{display:"flex", marginTop:"20px", columnGap:"20px", justifyContent:"space-around"}}>
         <div>
             <p>City:</p>

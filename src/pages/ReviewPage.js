@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Header from '../components/Header';
 import { createReview, deleteReview, getAllCities, getAllCompanies, getAllReviews, getAverageRatings, getReservationsNotReviewed, getUserReviews, updateReview } from '../web2Communication';
 import ProbaPage from './ProbaPage';
 
@@ -137,6 +138,7 @@ useEffect(()=>{
 
   return (
     <div>
+        <Header></Header>
        <h1 style={{ marginTop:"10px", textAlign:"center", fontSize:"40px"}}>Review Page</h1>
 
        <div style={{display:"flex", marginTop:"30px"}}>
