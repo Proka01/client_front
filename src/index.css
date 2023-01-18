@@ -50,6 +50,14 @@ input {
 	color: #fff;
 	margin-bottom: 15px;
 }
+
+.aleksaRedBtn
+{
+	background-color: #b90000;
+	color: #fff;
+	margin-bottom: 15px;
+}
+
 .signOutBtn {
 	background-color: #c21010;
 	color: #fff;

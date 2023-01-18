@@ -1,0 +1,58 @@
+
+
+.leftDiv
+{
+    width: 50%;
+}
+
+.rightDiv
+{
+    width: 50%;
+}
+
+.leftRightDiv
+{
+    display: flex;
+}
+
+.disabled
+{
+    background-color: gray;
+    cursor: default;
+}
+
+#restrict
+{
+    margin-top: 5px;
+    margin-left: 5px;
+    padding-bottom: 20px;
+}
+
+#notifications
+{
+    margin-top: 5px;
+    padding-bottom: 20px;
+}
+
+.inputDiv
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.buttonDiv
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.hideMe
+{
+    visibility: hidden;
+}
+
+.notifDiv
+{
+    overflow-y: auto;
+    height:400px;
+}

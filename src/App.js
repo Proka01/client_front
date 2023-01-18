@@ -12,6 +12,7 @@ import ClientInfoPage from "./pages/ClientInfoPage";
 import ReviewPage from './pages/ReviewPage';
 import ManagerHomePage from './pages/ManagerHomePage';
 import ManagerInfoPage from './pages/ManagerInfoPage';
+import AdminHomePage from './pages/AdminHomePage';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/clientHomePage" element={<ClientHomePage/>} />
         <Route exact path="/clientInfoPage" element={<ClientInfoPage/>} />
         <Route exact path="/managerInfoPage" element={<ManagerInfoPage/>} />
+        <Route exact path="/adminHomePage" element={<AdminHomePage/>} />
 
         <Route exact path='/reviewPage' element={<ReviewPage/>}/>
         <Route exact path='/managerHomePage' element={<ManagerHomePage/>}/>

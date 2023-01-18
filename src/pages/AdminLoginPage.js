@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { adminLogin } from '../web2Communication';
   
 const AdminLoginPage = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+	const navigate = useNavigate();
 
     // imamo log in btn, ali njemu nije dodeljen onClick
   	//<form> by default bi trebalo da ima dugme sa submitovanje forme
@@ -21,6 +23,8 @@ const AdminLoginPage = () => {
 		
 		console.log("Token from JSON:");
 		console.log(token);
+
+		navigate("/adminHomePage");
 
 		// setPassword("");
 		// setUsername("");

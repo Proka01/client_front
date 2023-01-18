@@ -1,3 +1,71 @@
+//ADMIN
+export async function getAllNotifications(token) {
+  const url = "http://localhost:8080/api/notification/getAllNotifications";
+  var bearer = 'Bearer ' + token;
+
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization' : bearer
+    },
+    //body: JSON.stringify({username,password})
+  })
+  .then(response => {
+      if(response.ok){
+          return response.json().then(json => {
+              const ret = json;
+              return ret;
+            });
+      }
+  })
+}
+
+export async function restrictClient(token,restricted,username) {
+  const url = "http://localhost:8085/api/admin/restrict";
+  var bearer = 'Bearer ' + token;
+  console.log(JSON.stringify({username,restricted}));
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization' : bearer
+    },
+    body: JSON.stringify({username,restricted})
+  })
+  .then(response => {
+      if(response.ok){
+          return response.json().then(json => {
+              const ret = json;
+              return ret;
+            });
+      }
+  })
+}
+
+export async function getAllClients(token) {
+  const url = "http://localhost:8085/api/admin/getAllClients";
+  var bearer = 'Bearer ' + token;
+
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization' : bearer
+    },
+    //body: JSON.stringify({username,password})
+  })
+  .then(response => {
+      if(response.ok){
+          return response.json().then(json => {
+              const ret = json;
+              return ret;
+            });
+      }
+  })
+}
+
 //CLIENT
 export async function registerClient(firstName, lastName, email, username, password, phoneNumber, passportNumber, birthDate) {
 
