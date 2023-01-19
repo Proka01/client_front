@@ -28,7 +28,7 @@ const ClientLoginPage = () => {
 		console.log("Token from JSON:");
 		console.log(token);
 
-		navigate("/clientInfoPage");
+		navigate("/clientHomePage");
 	}
 
     // setPassword("");

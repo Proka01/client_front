@@ -20,7 +20,7 @@ const ManagerLoginPage = () => {
         let token = await managerLoing(username, password);
         if(token!=undefined){
             localStorage.setItem("Token",token);
-            navigate("/managerInfoPage");
+            navigate("/managerHomePage");
             console.log("Token from JSON:");
             console.log(token);
         }
