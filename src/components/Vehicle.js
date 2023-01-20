@@ -6,9 +6,11 @@ const Vehicle = ({car, dayDiff, render, setRender}) => {
   async function makeReservation(){
     console.log(car.id,car.startDate,car.endDate,car.companyId)
     let response = await createReservation(car.id,car.startDate,car.endDate, car.companyId, localStorage.getItem("Token"));
-    console.log(String(localStorage.getItem("Token")))
-    console.log("response :" + response);
-    setRender(!render)
+    //console.log(String(localStorage.getItem("Token")))
+    if(response["message"]!=undefined && response["message"].includes("Successfully")){
+      console.log("Success" + response);
+      setRender(!render)
+    }
   }
 
   return (

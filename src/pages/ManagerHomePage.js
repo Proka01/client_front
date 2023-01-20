@@ -60,6 +60,7 @@ const ManagerHomePage = () => {
       if(response["message"]!=undefined && response["message"].includes("Successfully")){
         console.log("Success" + response);
         loadData();
+        alert("Successfully added vehicle!")
       }
     }
 
@@ -72,6 +73,7 @@ const ManagerHomePage = () => {
     if(response["message"]!=undefined && response["message"].includes("Successfully")){
       console.log("Success" + response);
       loadData();
+      alert("Successfully deleted vehicle!")
     }
   }
 
@@ -93,6 +95,7 @@ const ManagerHomePage = () => {
       if(response["message"]!=undefined && response["message"].includes("Successfully")){
         console.log("Success" + response);
         loadData();
+        alert("Successfully updated vehicle!")
       }
     }
 
@@ -147,10 +150,10 @@ const ManagerHomePage = () => {
         </div>
         <div >
           <button className='updateBtn' style={{marginLeft:"16%"}} onClick={updateInfo}>Update</button>
-          <button className='searchButton' onClick={gotoInfoPageClick} style={{marginRight:"30px", marginLeft:"30px"}}>Go to info page</button>
           <label style={{marginLeft:"30px", fontSize:"24px", color:"green", visibility:"hidden"}} id="infoLabel">
             Succesfully updated!
           </label>
+          <button className='searchButton' onClick={gotoInfoPageClick} style={{marginRight:"30px", marginLeft:"30px"}}>Go to info page</button>
         </div>
       </div>
       

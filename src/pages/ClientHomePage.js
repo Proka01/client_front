@@ -26,7 +26,7 @@ const ClientHomePage = () => {
         let date_2 = new Date(startDate);
         let difference = date_1.getTime() - date_2.getTime();
         let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
-        return TotalDays;
+        return TotalDays+1;
     }
 
     async function loadData(){

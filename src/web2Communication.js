@@ -1,4 +1,5 @@
 //ADMIN
+var reservationServiceUrl = "http://localhost:8084/reservation_service/api/";
 export async function getAllNotifications(token) {
   //const url = "http://localhost:8080/api/notification/getAllNotifications";
   var url = "http://localhost:8084/notification_service/api/notification/getAllNotifications"
@@ -323,7 +324,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   ////////////////////////////////////////////////////////////////////////////////////////////
 
   export async function searchAvailableVehicles(city, companyId, startDate, endDate) {
-    const url = "http://localhost:8081/api/vehicle/search";
+    //const url = "http://localhost:8081/api/vehicle/search";
+    const url = reservationServiceUrl+"vehicle/search"
   
     return fetch(url, {
       method: 'POST',
@@ -343,7 +345,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getAllCompanies() {
-    const url = "http://localhost:8081/api/company";
+    //const url = "http://localhost:8081/api/company";
+    const url = reservationServiceUrl+"company";
   
     return fetch(url, {
       method: 'GET',
@@ -361,8 +364,9 @@ export async function registerClient(firstName, lastName, email, username, passw
     })
   }
   export async function getAllCities() {
-    const url = "http://localhost:8081/api/company/getCities";
-  
+   //const url = "http://localhost:8081/api/company/getCities";
+    const url = reservationServiceUrl+"/company/getCities";
+
     return fetch(url, {
       method: 'GET',
       headers: {
@@ -381,9 +385,9 @@ export async function registerClient(firstName, lastName, email, username, passw
 
 
   export async function createReservation(vehicleId, startDate, endDate, companyId,token) {
-    const url = "http://localhost:8081/api/reservation";
+    //const url = "http://localhost:8081/api/reservation";
+    const url = reservationServiceUrl+"reservation";
     var bearer = 'Bearer ' + token;
-
   
     return fetch(url, {
       method: 'POST',
@@ -404,7 +408,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getReservations() {
-    const url = "http://localhost:8081/api/reservation";
+    //const url = "http://localhost:8081/api/reservation";
+    const url = reservationServiceUrl+"reservation";
     var bearer = 'Bearer ' + localStorage.getItem("Token");
 
     return fetch(url, {
@@ -425,7 +430,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function cancelReservation(id) {
-    const url = "http://localhost:8081/api/reservation";
+    //const url = "http://localhost:8081/api/reservation";
+    const url = reservationServiceUrl+"reservation";
     var bearer = 'Bearer ' + localStorage.getItem("Token");
 
     return fetch(url, {
@@ -447,8 +453,9 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getAllReviews(id, city) {
-    const url = "http://localhost:8081/api/review/"+id+"/"+city;
-  
+    //const url = "http://localhost:8081/api/review/"+id+"/"+city;
+    const url = reservationServiceUrl+"review/"+id+"/"+city;
+
     return fetch(url, {
       method: 'GET',
       headers: {
@@ -465,8 +472,9 @@ export async function registerClient(firstName, lastName, email, username, passw
     })
   }
   export async function getAverageRatings() {
-    const url = "http://localhost:8081/api/review/ratings";
-  
+    //const url = "http://localhost:8081/api/review/ratings";
+    const url = reservationServiceUrl+"review/ratings";
+
     return fetch(url, {
       method: 'GET',
       headers: {
@@ -484,7 +492,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getReservationsNotReviewed() {
-    const url = "http://localhost:8081/api/reservation/notReviewed";
+    //const url = "http://localhost:8081/api/reservation/notReviewed";
+    const url = reservationServiceUrl+"reservation/notReviewed";
     var bearer = 'Bearer ' + localStorage.getItem("Token");
 
     return fetch(url, {
@@ -505,7 +514,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function createReview(reservationId, rating, comment) {
-    const url = "http://localhost:8081/api/review";
+    //const url = "http://localhost:8081/api/review";
+    const url = reservationServiceUrl+"review";
     var bearer = 'Bearer ' + localStorage.getItem("Token");
 
   
@@ -528,7 +538,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getUserReviews() {
-    const url = "http://localhost:8081/api/review/userReviews";
+    //const url = "http://localhost:8081/api/review/userReviews";
+    const url = reservationServiceUrl+"review/userReviews";
     var bearer = 'Bearer ' + localStorage.getItem("Token");
 
     return fetch(url, {
@@ -549,7 +560,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function deleteReview(reviewId) {
-    const url = "http://localhost:8081/api/review";
+    //const url = "http://localhost:8081/api/review";
+    const url = reservationServiceUrl+"review"
     var bearer = 'Bearer ' + localStorage.getItem("Token");
 
     return fetch(url, {
@@ -571,7 +583,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateReview(reviewId, rating, comment) {
-    const url = "http://localhost:8081/api/review";
+    //const url = "http://localhost:8081/api/review";
+    const url = reservationServiceUrl+"review"
     var bearer = 'Bearer ' + localStorage.getItem("Token");
 
     return fetch(url, {
@@ -632,7 +645,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getCompanyInfo() {
-    const url = "http://localhost:8081/api/company/getInfo";
+    //const url = "http://localhost:8081/api/company/getInfo";
+    const url = reservationServiceUrl+"company/getInfo"
     var bearer = 'Bearer ' + localStorage.getItem("Token");
   
     return fetch(url, {
@@ -653,7 +667,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateCompanyInfo(name, description) {
-    const url = "http://localhost:8081/api/company/updateCompany";
+    //const url = "http://localhost:8081/api/company/updateCompany";
+    const url = reservationServiceUrl+"company/updateCompany";
     var bearer = 'Bearer ' + localStorage.getItem("Token");
   
     return fetch(url, {
@@ -675,8 +690,9 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getAllTypes() {
-    const url = "http://localhost:8081/api/companyVehicleType";
-  
+    //const url = "http://localhost:8081/api/companyVehicleType";
+    const url = reservationServiceUrl+"companyVehicleType";
+
     return fetch(url, {
       method: 'GET',
       headers: {
@@ -694,7 +710,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function addVehicleToCompany(model, brand, registration, vehicleTypeId, pricePerDay) {
-    const url = "http://localhost:8081/api/vehicle";
+    //const url = "http://localhost:8081/api/vehicle";
+    const url = reservationServiceUrl+"vehicle";
     var bearer = 'Bearer ' + localStorage.getItem("Token");
   
     return fetch(url, {
@@ -716,7 +733,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getCompanyVehicles() {
-    const url = "http://localhost:8081/api/vehicle/search";
+    //const url = "http://localhost:8081/api/vehicle/search";
+    const url = reservationServiceUrl+"vehicle/search"
     var bearer = 'Bearer ' + localStorage.getItem("Token");
   
     return fetch(url, {
@@ -737,7 +755,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function deleteCompanyVehicle(vehicleId) {
-    const url = "http://localhost:8081/api/vehicle";
+    //const url = "http://localhost:8081/api/vehicle";
+    const url = reservationServiceUrl+"vehicle";
     var bearer = 'Bearer ' + localStorage.getItem("Token");
   
     return fetch(url, {
@@ -759,7 +778,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateCompanyVehicle(vehicleId, model, brand, registration, pricePerDay) {
-    const url = "http://localhost:8081/api/vehicle";
+    //const url = "http://localhost:8081/api/vehicle";
+    const url = reservationServiceUrl+"vehicle"
     var bearer = 'Bearer ' + localStorage.getItem("Token");
   
     return fetch(url, {
