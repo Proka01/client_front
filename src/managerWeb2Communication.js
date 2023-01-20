@@ -1,5 +1,6 @@
 export async function getManagerInfo(token) {
-    const url = "http://localhost:8085/api/manager/findById";
+    //const url = "http://localhost:8084/user_service/api/manager/findById";
+    var url = "http://localhost:8084/user_service/api/manager/findById"
     var bearer = 'Bearer ' + token;
   
     return fetch(url, {
@@ -24,7 +25,7 @@ export async function getManagerInfo(token) {
 
 
   export async function updateManagerUsername(value, token) {
-    const url = "http://localhost:8085/api/manager/updateUsername";
+    const url = "http://localhost:8084/user_service/api/manager/updateUsername";
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -43,7 +44,7 @@ export async function getManagerInfo(token) {
   }
 
   export async function updateManagerPassword(value, token) {
-    const url = "http://localhost:8085/api/manager/updatePassword";
+    const url = "http://localhost:8084/user_service/api/manager/updatePassword";
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -62,7 +63,7 @@ export async function getManagerInfo(token) {
   }
 
   export async function updateManagerEmail(value, token) {
-    const url = "http://localhost:8085/api/manager/updateEmail";
+    const url = "http://localhost:8084/user_service/api/manager/updateEmail";
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -81,7 +82,7 @@ export async function getManagerInfo(token) {
   }
 
   export async function updateManagerFirstName(value, token) {
-    const url = "http://localhost:8085/api/manager/updateFirstName";
+    const url = "http://localhost:8084/user_service/api/manager/updateFirstName";
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -100,7 +101,7 @@ export async function getManagerInfo(token) {
   }
 
   export async function updateManagerLastName(value, token) {
-    const url = "http://localhost:8085/api/manager/updateLastName";
+    const url = "http://localhost:8084/user_service/api/manager/updateLastName";
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -119,7 +120,7 @@ export async function getManagerInfo(token) {
   }
 
   export async function updateManagerPhoneNumber(value, token) {
-    const url = "http://localhost:8085/api/manager/updatePhoneNumber";
+    const url = "http://localhost:8084/user_service/api/manager/updatePhoneNumber";
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -138,7 +139,7 @@ export async function getManagerInfo(token) {
   }
 
   export async function updateManagerCompanyName(value, token) {
-    const url = "http://localhost:8085/api/manager/updateCompanyName";
+    const url = "http://localhost:8084/user_service/api/manager/updateCompanyName";
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -157,7 +158,7 @@ export async function getManagerInfo(token) {
   }
 
   export async function updateManagerBirthDate(value, token) {
-    const url = "http://localhost:8085/api/manager/updateBirthDate";
+    const url = "http://localhost:8084/user_service/api/manager/updateBirthDate";
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {

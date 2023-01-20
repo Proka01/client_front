@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header';
+import { useNavigate } from 'react-router-dom';
 import { addVehicleToCompany, deleteCompanyVehicle, getAllTypes, getCompanyInfo, getCompanyVehicles, updateCompanyInfo, updateCompanyVehicle } from '../web2Communication'
 
 const ManagerHomePage = () => {
@@ -7,6 +8,12 @@ const ManagerHomePage = () => {
   const [company, setCompany] = useState({name:''});
   const [newVehicleType, setNewVehicleType] = useState();
   const [companyVehicles, setCompanyVehicles] = useState([]);
+  const navigate = useNavigate();
+
+  function gotoInfoPageClick()
+    {
+        navigate("/managerInfoPage");
+    }
 
   async function loadData(){
     let companyL = await getCompanyInfo();
@@ -140,6 +147,7 @@ const ManagerHomePage = () => {
         </div>
         <div >
           <button className='updateBtn' style={{marginLeft:"16%"}} onClick={updateInfo}>Update</button>
+          <button className='searchButton' onClick={gotoInfoPageClick} style={{marginRight:"30px", marginLeft:"30px"}}>Go to info page</button>
           <label style={{marginLeft:"30px", fontSize:"24px", color:"green", visibility:"hidden"}} id="infoLabel">
             Succesfully updated!
           </label>

@@ -1,6 +1,7 @@
 //ADMIN
 export async function getAllNotifications(token) {
-  const url = "http://localhost:8080/api/notification/getAllNotifications";
+  //const url = "http://localhost:8080/api/notification/getAllNotifications";
+  var url = "http://localhost:8084/notification_service/api/notification/getAllNotifications"
   var bearer = 'Bearer ' + token;
 
   return fetch(url, {
@@ -22,7 +23,8 @@ export async function getAllNotifications(token) {
 }
 
 export async function restrictClient(token,restricted,username) {
-  const url = "http://localhost:8085/api/admin/restrict";
+  //const url = "http://localhost:8085/api/admin/restrict";
+  var url = "http://localhost:8084/user_service/api/admin/restrict"
   var bearer = 'Bearer ' + token;
   console.log(JSON.stringify({username,restricted}));
 
@@ -45,7 +47,8 @@ export async function restrictClient(token,restricted,username) {
 }
 
 export async function getAllClients(token) {
-  const url = "http://localhost:8085/api/admin/getAllClients";
+  //const url = "http://localhost:8085/api/admin/getAllClients";
+  var url = "http://localhost:8084/user_service/api/admin/getAllClients"
   var bearer = 'Bearer ' + token;
 
   return fetch(url, {
@@ -69,7 +72,8 @@ export async function getAllClients(token) {
 //CLIENT
 export async function registerClient(firstName, lastName, email, username, password, phoneNumber, passportNumber, birthDate) {
 
-    const url = "http://localhost:8085/api/client/register";
+    //const url = "http://localhost:8085/api/client/register";
+    var url = "http://localhost:8084/user_service/api/client/register"
   
     fetch(url, {
       method: 'POST',
@@ -83,7 +87,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function clientLogin(username, password) {
-    const url = "http://localhost:8085/api/client/login";
+    //const url = "http://localhost:8085/api/client/login";
+    var url = "http://localhost:8084/user_service/api/client/login"
   
     return fetch(url, {
       method: 'POST',
@@ -105,7 +110,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getClientInfo(token) {
-    const url = "http://localhost:8085/api/client/findById";
+    //const url = "http://localhost:8085/api/client/findById";
+    var url = "http://localhost:8084/user_service/api/client/findById"
     var bearer = 'Bearer ' + token;
   
     return fetch(url, {
@@ -130,7 +136,8 @@ export async function registerClient(firstName, lastName, email, username, passw
 
 
   export async function updateClientUsername(value, token) {
-    const url = "http://localhost:8085/api/client/updateUsername";
+    //const url = "http://localhost:8085/api/client/updateUsername";
+    var url = "http://localhost:8084/user_service/api/client/updateUsername"
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -149,7 +156,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateClientPassword(value, token) {
-    const url = "http://localhost:8085/api/client/updatePassword";
+    //const url = "http://localhost:8085/api/client/updatePassword";
+    var url = "http://localhost:8084/user_service/api/client/updatePassword"
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -168,7 +176,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateClientEmail(value, token) {
-    const url = "http://localhost:8085/api/client/updateEmail";
+    //const url = "http://localhost:8085/api/client/updateEmail";
+    var url = "http://localhost:8084/user_service/api/client/updateEmail"
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -187,7 +196,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateClientFirstName(value, token) {
-    const url = "http://localhost:8085/api/client/updateFirstName";
+    //const url = "http://localhost:8085/api/client/updateFirstName";
+    var url = "http://localhost:8084/user_service/api/client/updateFirstName"
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -206,7 +216,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateClientLastName(value, token) {
-    const url = "http://localhost:8085/api/client/updateLastName";
+    //const url = "http://localhost:8085/api/client/updateLastName";
+    var url = "http://localhost:8084/user_service/api/client/updateLastName"
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -225,7 +236,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateClientPhoneNumber(value, token) {
-    const url = "http://localhost:8085/api/client/updatePhoneNumber";
+    //const url = "http://localhost:8085/api/client/updatePhoneNumber";
+    var url = "http://localhost:8084/user_service/api/client/updatePhoneNumber"
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -244,7 +256,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateClientPassepotNumber(value, token) {
-    const url = "http://localhost:8085/api/client/updatePassepotNumber";
+    //const url = "http://localhost:8085/api/client/updatePassepotNumber";
+    var url = "http://localhost:8084/user_service/api/client/updatePassepotNumber"
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -263,7 +276,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function updateClientBirthDate(value, token) {
-    const url = "http://localhost:8085/api/client/updateBirthDate";
+    //const url = "http://localhost:8085/api/client/updateBirthDate";
+    var url = "http://localhost:8084/user_service/api/client/updateBirthDate"
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -282,7 +296,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function getAllClientNotifications(token) {
-    const url = "http://localhost:8080/api/notification/getNotificationsForClientId";
+    //const url = "http://localhost:8080/api/notification/getNotificationsForClientId";
+    var url = "http://localhost:8084/notification_service/api/notification/getNotificationsForClientId"
     var bearer = 'Bearer ' + token;
 
     return fetch(url, {
@@ -580,7 +595,8 @@ export async function registerClient(firstName, lastName, email, username, passw
 // MANAGER
   export async function registerManager(email, username, phoneNumber, password,firstName,lastName,companyName,birthDate) {
 
-    const url = "http://localhost:8085/api/manager/register";
+    //const url = "http://localhost:8085/api/manager/register";
+    var url = "http://localhost:8084/user_service/api/manager/register"
   
     fetch(url, {
       method: 'POST',
@@ -594,7 +610,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   }
 
   export async function managerLoing(username, password) {
-    const url = "http://localhost:8085/api/manager/login";
+    //const url = "http://localhost:8085/api/manager/login";
+    var url = "http://localhost:8084/user_service/api/manager/login"
   
     return fetch(url, {
       method: 'POST',
@@ -766,7 +783,8 @@ export async function registerClient(firstName, lastName, email, username, passw
   
 // ADMIN
 export async function adminLogin(username, password) {
-    const url = "http://localhost:8085/api/admin/login";
+    //const url = "http://localhost:8085/api/admin/login";
+    var url = "http://localhost:8084/user_service/api/admin/login"
   
     return fetch(url, {
       method: 'POST',
